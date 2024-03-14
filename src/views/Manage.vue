@@ -71,7 +71,6 @@
             <el-dropdown-menu slot="dropdown">
               <el-dropdown-item>查看</el-dropdown-item>
               <el-dropdown-item>新增</el-dropdown-item>
-              000
               <el-dropdown-item>删除</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
@@ -113,7 +112,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .el-header {
   background-color: #B3C0D1;
   color: #333;

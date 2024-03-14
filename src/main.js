@@ -6,9 +6,14 @@ import 'element-ui/lib/theme-chalk/index.css';
 
 //自定义全局css
 import '@/assets/css/global.css'
+//导入axios
+import request from "@/utils/request";
 
 Vue.config.productionTip = false
-Vue.use(ElementUI, { size: 'small'});
+Vue.use(ElementUI);
+
+//挂载全局
+Vue.prototype.$request = request
 
 new Vue({
   router,
