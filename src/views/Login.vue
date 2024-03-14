@@ -33,7 +33,7 @@
 
         <div style="display: flex">
           <div style="flex: 1; color: blueviolet; cursor: pointer" >忘记密码</div>
-          <div style="flex: 1; text-align: right; color: blueviolet; cursor: pointer">还没有账号，点击注册</div>
+          <div style="flex: 1; text-align: right; color: blueviolet; cursor: pointer" @click="$router.push('/register')">还没有账号，点击注册</div>
         </div>
 
       </el-form>
@@ -93,7 +93,7 @@ export default {
           this.$request.post('/login', this.user).then(res => {
             // console.log(res)
             if (res.code === 200) {
-              //localStorage.setItem("user", JSON.stringify(res.data))  // 存储用户信息到浏览器
+              localStorage.setItem("user", JSON.stringify(res.data))  // 存储用户信息到浏览器
               this.$router.push('/')
               this.$message.success("登录成功")
             } else {
