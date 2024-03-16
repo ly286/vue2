@@ -51,7 +51,7 @@
     <div>
       <!-- 轮播图-->
       <div class="carousel">
-        <el-carousel :interval="4000" type="card" height="200px">
+        <el-carousel :interval="3000" type="card" height="imgHeight">
           <el-carousel-item>
             <img src="@/assets/img/img_1.png">
           </el-carousel-item>
@@ -83,21 +83,23 @@
           <div class="title-th">今日推荐</div>
           <div class="content">
             <el-row :gutter="20">
-              <el-col :span="6">
+
+              <el-col :span="6" v-for="(item, id) in items" :key="id">
                 <div class="item">
-                  <img src="@/assets/img/huluobu.jpg" alt="">
+<!--                  <img src="@/assets/img/huluobu.jpg" alt="">-->
+                  <img :src=item.img alt="">
                   <div class="info">
-                    <div class="subtitle">文字介绍</div>
+                    <div class="subtitle">{{item.title}}</div>
                     <div class="bottom">
-                      <span class="fr">201赞</span>
-                      <span class="f14">玉玉</span>
+                      <span class="fr">{{item.liulan}}赞</span>
+                      <span class="f14">{{item.userId}}</span>
                     </div>
                   </div>
                 </div>
                 <div class="grid-content bg-purple"></div>
               </el-col>
 
-              
+
 
 
 
@@ -117,19 +119,31 @@
 <script>
 
 
+
 export default {
   name: "HomeView",
   data() {
     return {
       activeIndex: '1',
       activeIndex2: '1',
-      input: ''
+      input: '',
+      items: []
     };
   },
   methods: {
     handleSelect(key, keyPath) {
       console.log(key, keyPath);
+    },
+    async getAll(){
+      this.$request.get('/zhuYe/all').then(res => {
+        console.log(res)
+        this.items = res.data
+      })
     }
+  },
+  created() {
+    //获取主页所有信息
+    this.getAll();
   }
 }
 </script>
@@ -159,7 +173,6 @@ export default {
 
 .carousel {
   width: 100%;
-  max-height: 640px;
 
   img {
     width: 100%;
@@ -169,7 +182,7 @@ export default {
 
 .section {
   width: 80%;
-  height: 80vh;
+  //height: 80vh;
   margin: 0 auto;
   padding: 20px 0;
   background-color: white;
@@ -193,15 +206,17 @@ export default {
 }
 
 .content {
-  background-color: #545c64;
+  //background-color: #545c64;
 
   .item {
-    width: 300px;
-    height: 275px;
+    width: 80%;
+    margin: auto;
+    //height: 175px;
 
     img {
       width: 100%;
-      height: 100%;
+      //height: 100%;
+      aspect-ratio: 4/3;
     }
 
     .info {
@@ -249,7 +264,7 @@ export default {
 
 .grid-content {
   border-radius: 4px;
-  min-height: 200px;
+  min-height: 50px;
 }
 
 
