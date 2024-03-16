@@ -118,7 +118,7 @@
 </template>
 
 <script>
-// import axios from "axios";
+import axios from "axios";
 import request from "@/utils/request";
 
 export default {
@@ -142,7 +142,7 @@ export default {
   mounted() {
     // axios.get('http://localhost:8080/user/1').then(res => {
     //       console.log(res.data)
-    //
+    //       this.users = res.data
     //     })
     request.get('/user/1').then(res => {
       console.log(res)

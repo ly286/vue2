@@ -10,10 +10,12 @@ const  request = axios.create({
 //可以自请求发送前对请求做一些处理
 //比如：统一加token，对请求参数统一加密
 request.interceptors.request.use(config => {
-    // config.headers['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
-    config.headers['Content-Type'] = 'application/json;charset=utf-8';
-    // let user = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : null;
-    // config.headers['token'] = user.token;  // 设置请求头
+    config.headers['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
+    // config.headers['Content-Type'] = 'application/json;charset=utf-8';
+
+    let user = JSON.parse(localStorage.getItem('user') || '{}');
+    config.headers['token'] = user.token
+
     return config
 },error => {
     console.error('请求错误', error);

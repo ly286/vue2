@@ -30,6 +30,21 @@ const routes = [
     name: 'Register',
     component: () => import('@/views/Register.vue')
   },
+  {
+    path: '/header',
+    name: 'Header',
+    component: () => import('@/components/Header.vue')
+  },
+  {
+    path: '/crops',
+    name: 'Crops',
+    component: () => import('@/views/Crops.vue')
+  },
+  {
+    path: '/pests',
+    name: 'Pests',
+    component: () => import('@/views/Pests.vue')
+  },
 
 
 
