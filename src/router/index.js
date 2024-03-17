@@ -13,12 +13,14 @@ const routes = [
   {
     path: '/element',
     name: 'element',
-    component: () => import('@/views/Element.vue')
+    component: () => import('@/views/Element.vue'),
+    meta: { isLogin: true }
   },
   {
     path: '/manage',
     name: 'Manage',
-    component: () => import('@/views/Manage.vue')
+    component: () => import('@/views/Manage.vue'),
+    meta: { isLogin: true }
   },
   {
     path: '/login',
@@ -45,6 +47,11 @@ const routes = [
     name: 'Pests',
     component: () => import('@/views/Pests.vue')
   },
+  {
+    path: '/liangshizuowu',
+    name: 'Liangshizuowu',
+    component: () => import('@/views/liangshizuowu.vue')
+  },
 
 
 
@@ -62,5 +69,7 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes
 })
+
+
 
 export default router

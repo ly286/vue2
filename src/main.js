@@ -3,6 +3,7 @@ import App from './App.vue'
 import router from './router'
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
+import '@/router/permisson.js'
 
 import 'normalize.css'
 //自定义全局css

@@ -42,7 +42,14 @@
       <el-input prefix-icon="el-icon-search" v-model="input" style="width: 200px; margin-left: 20px; padding-top: 10px"
                 placeholder="搜索"></el-input>
       <div class="header-right">
-        <router-link to="/login" style="color: white;">登录</router-link>
+        <!-- 如果用户已登录，则显示用户昵称 -->
+        <div v-if="isLoggedIn">
+          {{ username }}
+        </div>
+        <!-- 如果用户未登录，则显示登录按钮 -->
+        <div v-else>
+          登录
+        </div>
       </div>
     </div>
 
@@ -140,12 +147,20 @@ export default {
       displayedItems: [], // 当前显示的数据
       currentPage: 1, // 当前页码
       pageSize: 12, // 每页显示的条目数
-      totalItems: 0 // 总条目数
+      totalItems: 0, // 总条目数
+      isLoggedIn: false, // 用户登录状态，默认为未登录
+      username: '' // 用户昵称
     };
   },
   methods: {
     handleSelect(key, keyPath) {
       console.log(key, keyPath);
+    },
+    // 模拟用户登录动作
+    login() {
+      // 在实际应用中，根据实际情况设置 isLoggedIn 和 username
+      this.isLoggedIn = true;
+      this.username = '用户昵称'; // 假设用户已登录时有一个用户名
     },
     async getAll(){
       this.$request.get('/zhuYe/all').then(res => {
@@ -174,6 +189,12 @@ export default {
     // this.displayedItems = this.items.slice(0, this.pageSize);
     // // 设置总条目数
     // this.totalItems = this.items.length;
+
+    // 在组件创建时检查用户登录状态
+    if (localStorage.getItem('isLoggedIn') === 'true') {
+      this.isLoggedIn = true;
+      this.username = '用户昵称'; // 假设用户已登录时有一个用户名
+    }
   }
 }
 </script>

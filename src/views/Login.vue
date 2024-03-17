@@ -93,7 +93,8 @@ export default {
           this.$request.post('/login', this.user).then(res => {
             // console.log(res)
             if (res.code === 200) {
-              localStorage.setItem("user", JSON.stringify(res.data))  // 存储用户信息到浏览器
+              // 存储用户信息到浏览器
+              localStorage.setItem("user", JSON.stringify(res.data))
               this.$router.push('/')
               this.$message.success("登录成功")
             } else {
