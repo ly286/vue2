@@ -90,9 +90,15 @@ export default {
     login() {
       this.$refs['loginRef'].validate((valid) => {
         if (valid) {
+          const username = this.user.username;
           this.$request.post('/login', this.user).then(res => {
             // console.log(res)
             if (res.code === 200) {
+              // 自定义用户名
+              localStorage.setItem('username', JSON.stringify(username)); // 将用户名存储到本地浏览器
+              //存储用户信息到vuex
+              console.log(this.$store)
+              this.$store.commit("setUser", res.data)
               // 存储用户信息到浏览器
               localStorage.setItem("user", JSON.stringify(res.data))
               this.$router.push('/')

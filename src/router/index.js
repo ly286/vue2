@@ -20,7 +20,7 @@ const routes = [
     path: '/manage',
     name: 'Manage',
     component: () => import('@/views/Manage.vue'),
-    meta: { isLogin: true }
+    // meta: { isLogin: true }
   },
   {
     path: '/login',
@@ -51,6 +51,16 @@ const routes = [
     path: '/liangshizuowu',
     name: 'Liangshizuowu',
     component: () => import('@/views/liangshizuowu.vue')
+  },
+  {
+    path: '/shucaizuowu',
+    name: 'Shucaizuowu',
+    component: () => import('@/views/shucaizuowu.vue')
+  },
+  {
+    path: '/huluobu',
+    name: 'Huluobu',
+    component: () => import('@/views/allcrops/huluobu.vue')
   },
 
 

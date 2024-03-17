@@ -4,6 +4,7 @@ import router from './router'
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import '@/router/permisson.js'
+import store from "@/store";
 
 import 'normalize.css'
 //自定义全局css
@@ -20,5 +21,6 @@ Vue.prototype.$request = request
 
 new Vue({
   router,
+  store,
   render: h => h(App)
 }).$mount('#app')

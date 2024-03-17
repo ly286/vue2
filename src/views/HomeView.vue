@@ -15,34 +15,46 @@
         <el-menu-item index="/">首页</el-menu-item>
         <el-submenu index="/crops">
           <template slot="title">农作物分类</template>
-          <el-menu-item index="2-1">粮食作物</el-menu-item>
-          <el-menu-item index="2-2">经济作物</el-menu-item>
-          <el-menu-item index="2-3">蔬菜作物</el-menu-item>
-          <el-menu-item index="2-3">果类</el-menu-item>
-          <el-menu-item index="2-3">野生果类</el-menu-item>
-          <el-menu-item index="2-3">药用作物</el-menu-item>
-          <el-submenu index="2-4">
+          <el-menu-item index="/liangshizuowu">粮食作物</el-menu-item>
+          <el-menu-item index='/'>经济作物</el-menu-item>
+          <el-menu-item index='/shucaizuowu'>蔬菜作物</el-menu-item>
+          <el-menu-item index='/'>果类</el-menu-item>
+          <el-menu-item index='/'>野生果类</el-menu-item>
+          <el-menu-item index='/'>药用作物</el-menu-item>
+          <el-submenu index='/'>
             <template slot="title">选项4</template>
-            <el-menu-item index="2-4-1">选项1</el-menu-item>
-            <el-menu-item index="2-4-2">选项2</el-menu-item>
-            <el-menu-item index="2-4-3">选项3</el-menu-item>
+            <el-menu-item index='/'>选项1</el-menu-item>
+            <el-menu-item index='/'>选项2</el-menu-item>
+            <el-menu-item index='/'>选项3</el-menu-item>
           </el-submenu>
         </el-submenu>
         <el-submenu>
           <template slot="title">病虫害分类</template>
-          <el-menu-item index="3-1">虫害类</el-menu-item>
-          <el-menu-item index="3-2">病害类</el-menu-item>
+          <el-menu-item index='/'>虫害类</el-menu-item>
+          <el-menu-item index='/'>病害类</el-menu-item>
         </el-submenu>
 
         <el-menu-item index="/"><a href="https://earth.nullschool.net/zh-cn/" target="_blank"
                                    style="text-decoration: none;">气象</a></el-menu-item>
-        <el-menu-item index="/"><a href="https://www.ele.me" target="_blank" style="text-decoration: none;">联系我们</a>
+        <el-menu-item @click="showMessage">联系我们
         </el-menu-item>
       </el-menu>
       <el-input prefix-icon="el-icon-search" v-model="input" style="width: 200px; margin-left: 20px; padding-top: 10px"
                 placeholder="搜索"></el-input>
       <div class="header-right">
-        <router-link to="/login" style="color: white;">登录</router-link>
+        <!-- 根据用户登录状态显示不同内容 -->
+        <span v-if="!user">
+      <router-link to="/login" style="color: white">登录</router-link>
+    </span>
+        <span v-else>
+      <el-dropdown trigger="click" @command="handleCommand">
+        <span class="user-name" style="color: orange">{{ username }}</span>
+        <el-dropdown-menu slot="dropdown">
+          <el-dropdown-item command="logout">后台管理</el-dropdown-item>
+          <el-dropdown-item command="logout">退出登录</el-dropdown-item>
+        </el-dropdown-menu>
+      </el-dropdown>
+    </span>
       </div>
     </div>
 
@@ -115,12 +127,20 @@
     <!--  底部  -->
     <el-footer class="footer">
       <!-- 这里放置页面底部的内容 -->
-      <div class="content">
-        版权所有 &copy; ly by 2024
+      <div class="content2">
+        版权所有 &copy; ly by 2024  &nbsp;&nbsp;&nbsp;&nbsp;  备案号xxxxxxx
       </div>
     </el-footer>
+<!--浮动返回顶端底端-->
     <div>
-
+      <div class="float-buttons">
+        <div class="top-button" @click="scrollToTop">
+          <i class="el-icon-arrow-up"></i>
+        </div>
+        <div class="bottom-button" @click="scrollToBottom">
+          <i class="el-icon-arrow-down"></i>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -131,8 +151,14 @@
 
 export default {
   name: "HomeView",
+  computed: {
+    user() {
+      return this.$store.state.user// 获取 Vuex 中的用户信息
+    }
+  },
   data() {
     return {
+      username: 'admin',
       activeIndex: '1',
       activeIndex2: '1',
       input: '',
@@ -146,6 +172,9 @@ export default {
   methods: {
     handleSelect(key, keyPath) {
       console.log(key, keyPath);
+    },
+    showMessage() {
+      this.$message('邮箱：xxxxxx@xx.com');
     },
     async getAll(){
       this.$request.get('/zhuYe/all').then(res => {
@@ -165,6 +194,27 @@ export default {
       this.displayedItems = this.items.slice(startIndex, endIndex);
       // 更新总条目数
       this.totalItems = this.items.length;
+    },
+    handleCommand(command) {
+      if (command === 'logout') {
+        // 执行退出登录操作，例如清除本地存储中的用户信息，重定向到登录页等
+        // 清除本地存储中的用户信息
+        localStorage.removeItem('username');
+        // 重定向到登录页
+        this.$router.push('/login');
+      }
+    },
+    scrollToTop() {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth' // 平滑滚动效果
+      });
+    },
+    scrollToBottom() {
+      window.scrollTo({
+        top: document.body.scrollHeight,
+        behavior: 'smooth' // 平滑滚动效果
+      });
     }
   },
   created() {
@@ -307,8 +357,37 @@ export default {
   text-align: center; /* 文字水平居中 */
 }
 
-.content {
+.content2 {
   color: #ffffff; /* 文字颜色 */
+}
+
+
+.float-buttons {
+  position: fixed;
+  top: 50%;
+  right: 20px;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+}
+
+.top-button,
+.bottom-button {
+  width: 40px;
+  height: 40px;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.top-button:hover,
+.bottom-button:hover {
+  background-color: rgba(0, 0, 0, 0.8);
 }
 
 </style>

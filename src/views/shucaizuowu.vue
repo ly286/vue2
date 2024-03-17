@@ -64,14 +64,15 @@
       <div class="section">
         <div class="wrapper">
 
-          <div class="title-th">粮食作物</div>
+          <div class="title-th">蔬菜作物</div>
           <div class="content">
             <el-row :gutter="20">
 
               <el-col :span="24" v-for="(item, id) in displayedItems" :key="id">
                 <div class="item">
-                  <!--                  <img src="@/assets/img/huluobu.jpg" alt="">-->
-                  <img :src=item.img alt="">
+                  <a :href="item.link"> <!-- 动态赋值超链接地址 -->
+                    <img :src="item.img" alt="">
+                  </a>
                   <div class="info">
                     <div class="subtitle">{{item.title}}</div>
                     <div class="bottom">
