@@ -19,14 +19,13 @@
           <el-menu-item index='/'>经济作物</el-menu-item>
           <el-menu-item index='/shucaizuowu'>蔬菜作物</el-menu-item>
           <el-menu-item index='/'>果类</el-menu-item>
-          <el-menu-item index='/'>野生果类</el-menu-item>
           <el-menu-item index='/'>药用作物</el-menu-item>
-          <el-submenu index='/'>
-            <template slot="title">选项4</template>
-            <el-menu-item index='/'>选项1</el-menu-item>
-            <el-menu-item index='/'>选项2</el-menu-item>
-            <el-menu-item index='/'>选项3</el-menu-item>
-          </el-submenu>
+<!--          <el-submenu index='/'>-->
+<!--            <template slot="title">选项4</template>-->
+<!--            <el-menu-item index='/'>选项1</el-menu-item>-->
+<!--            <el-menu-item index='/'>选项2</el-menu-item>-->
+<!--            <el-menu-item index='/'>选项3</el-menu-item>-->
+<!--          </el-submenu>-->
         </el-submenu>
         <el-submenu>
           <template slot="title">病虫害分类</template>
@@ -50,7 +49,8 @@
       <el-dropdown trigger="click" @command="handleCommand">
         <span class="user-name" style="color: orange">{{ username }}</span>
         <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item command="logout">后台管理</el-dropdown-item>
+          <el-dropdown-item command="manage">后台管理</el-dropdown-item>
+          <el-dropdown-item command="element">新增文章</el-dropdown-item>
           <el-dropdown-item command="logout">退出登录</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
@@ -202,6 +202,10 @@ export default {
         localStorage.removeItem('username');
         // 重定向到登录页
         this.$router.push('/login');
+      }else if(command === 'manage'){
+        this.$router.push('/manage')
+      }else if(command === 'element'){
+        this.$router.push('/element')
       }
     },
     scrollToTop() {

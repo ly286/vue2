@@ -19,14 +19,13 @@
           <el-menu-item index='/'>经济作物</el-menu-item>
           <el-menu-item index='/shucaizuowu'>蔬菜作物</el-menu-item>
           <el-menu-item index='/'>果类</el-menu-item>
-          <el-menu-item index='/'>野生果类</el-menu-item>
           <el-menu-item index='/'>药用作物</el-menu-item>
-          <el-submenu index='/'>
-            <template slot="title">选项4</template>
-            <el-menu-item index='/'>选项1</el-menu-item>
-            <el-menu-item index='/'>选项2</el-menu-item>
-            <el-menu-item index='/'>选项3</el-menu-item>
-          </el-submenu>
+<!--          <el-submenu index='/'>-->
+<!--            <template slot="title">选项4</template>-->
+<!--            <el-menu-item index='/'>选项1</el-menu-item>-->
+<!--            <el-menu-item index='/'>选项2</el-menu-item>-->
+<!--            <el-menu-item index='/'>选项3</el-menu-item>-->
+<!--          </el-submenu>-->
         </el-submenu>
         <el-submenu>
           <template slot="title">病虫害分类</template>
@@ -48,6 +47,7 @@
         <span class="user-name" style="color: orange">{{ username }}</span>
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item command="manage">后台管理</el-dropdown-item>
+          <el-dropdown-item command="element">后台管理</el-dropdown-item>
           <el-dropdown-item command="logout">退出登录</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
@@ -67,20 +67,19 @@
           <div class="title-th">蔬菜作物</div>
           <div class="content">
             <el-row :gutter="20">
-
               <el-col :span="24" v-for="(item, id) in displayedItems" :key="id">
-                <div class="item">
-                  <a :href="item.link"> <!-- 动态赋值超链接地址 -->
+                <router-link :to="'/item/' + id" @click="handleItemClick(item)">
+                  <div class="item">
                     <img :src="item.img" alt="">
-                  </a>
-                  <div class="info">
-                    <div class="subtitle">{{item.title}}</div>
-                    <div class="bottom">
-                      <span class="fr">{{item.liulan}}赞</span>
-                      <span class="f14">{{item.userId}}</span>
+                    <div class="info">
+                      <div class="subtitle">{{item.title}}</div>
+                      <div class="bottom">
+                        <span class="fr">{{item.liulan}}赞</span>
+                        <span class="f14">{{item.userId}}</span>
+                      </div>
                     </div>
                   </div>
-                </div>
+                </router-link>
                 <div class="grid-content bg-purple"></div>
               </el-col>
             </el-row>
@@ -146,6 +145,9 @@ export default {
     handleSelect(key, keyPath) {
       console.log(key, keyPath);
     },
+    handleItemClick(item) {
+      // 在这里执行跳转后的逻辑，例如存储相关数据到Vuex，然后跳转
+    },
     showMessage() {
       this.$message('邮箱：xxxxxx@xx.com');
     },
@@ -177,6 +179,8 @@ export default {
         this.$router.push('/login');
       }else if(command === 'manage'){
         this.$router.push('/manage')
+      }else if(command === 'element'){
+        this.$router.push('/element')
       }
     },
     scrollToTop() {

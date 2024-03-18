@@ -74,7 +74,7 @@
               <el-dropdown-item @click.native="$router.push('/login')">退出登录</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
-          <span style="margin-right: 15px;">王小虎</span>
+          <span style="margin-right: 15px;">admin</span>
         </el-header>
 
         <el-main>

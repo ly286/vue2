@@ -1,106 +1,47 @@
 <template>
   <div>
-    <el-row>
-      <el-col :span="24">
-        <div class="grid-content bg-purple-dark"></div>
-      </el-col>
 
-      <el-col :span="12">
-        <div class="grid-content bg-purple"></div>
-      </el-col>
-      <el-col :span="12">
-        <div class="grid-content bg-purple-light"></div>
-      </el-col>
+    <div style="margin: 200px"></div>
 
-      <el-col :span="8">
-        <div class="grid-content bg-purple"></div>
-      </el-col>
-      <el-col :span="8">
-        <div class="grid-content bg-purple-light"></div>
-      </el-col>
-      <el-col :span="8">
-        <div class="grid-content bg-purple"></div>
-      </el-col>
-
-      <el-col :span="6">
-        <div class="grid-content bg-purple"></div>
-      </el-col>
-      <el-col :span="6">
-        <div class="grid-content bg-purple-light"></div>
-      </el-col>
-      <el-col :span="6">
-        <div class="grid-content bg-purple"></div>
-      </el-col>
-      <el-col :span="6">
-        <div class="grid-content bg-purple-light"></div>
-      </el-col>
-
-      <el-col :span="4">
-        <div class="grid-content bg-purple"></div>
-      </el-col>
-      <el-col :span="4">
-        <div class="grid-content bg-purple-light"></div>
-      </el-col>
-      <el-col :span="4">
-        <div class="grid-content bg-purple"></div>
-      </el-col>
-      <el-col :span="4">
-        <div class="grid-content bg-purple-light"></div>
-      </el-col>
-      <el-col :span="4">
-        <div class="grid-content bg-purple"></div>
-      </el-col>
-      <el-col :span="4">
-        <div class="grid-content bg-purple-light"></div>
-      </el-col>
-    </el-row>
-
-    <el-row>
-      <el-button type="primary">主要按钮</el-button>
-    </el-row>
-
+    <div style="margin: 0 20px;">
     <el-form ref="form" :model="form" label-width="80px">
-      <el-form-item label="活动名称">
+      <el-form-item label="文章标题">
         <el-input v-model="form.name"></el-input>
       </el-form-item>
-      <el-form-item label="活动区域">
+      <el-form-item label="描述">
+        <el-input v-model="form.miaoshu"></el-input>
+      </el-form-item>
+      <el-form-item label="作品分类">
         <el-select v-model="form.region" placeholder="请选择活动区域">
-          <el-option label="区域一" value="shanghai"></el-option>
-          <el-option label="区域二" value="beijing"></el-option>
+          <el-option label="粮食作物" value="shanghai"></el-option>
+          <el-option label="经济作物" value="jingji"></el-option>
+          <el-option label="蔬菜作物" value="shucai"></el-option>
+          <el-option label="果类" value="guo"></el-option>
+          <el-option label="药用作物" value="yaoyong"></el-option>
+          <el-option label="病害类" value="binghai"></el-option>
+          <el-option label="虫害类" value="chonghai"></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="活动时间">
-        <el-col :span="11">
-          <el-date-picker type="date" placeholder="选择日期" v-model="form.date1" style="width: 100%;"></el-date-picker>
-        </el-col>
-        <el-col class="line" :span="2">-</el-col>
-        <el-col :span="11">
-          <el-time-picker placeholder="选择时间" v-model="form.date2" style="width: 100%;"></el-time-picker>
-        </el-col>
+      <el-form-item>
+        <el-upload
+            class="upload-demo"
+            action="/upload-url"
+            :on-preview="handlePreview"
+            :on-remove="handleRemove"
+            :before-upload="beforeUpload"
+        >
+          <el-button size="small" type="primary">上传图片</el-button>
+        </el-upload>
       </el-form-item>
-      <el-form-item label="即时配送">
-        <el-switch v-model="form.delivery"></el-switch>
-      </el-form-item>
-      <el-form-item label="活动性质">
-        <el-checkbox-group v-model="form.type">
-          <el-checkbox label="美食/餐厅线上活动" name="type"></el-checkbox>
-          <el-checkbox label="地推活动" name="type"></el-checkbox>
-          <el-checkbox label="线下主题活动" name="type"></el-checkbox>
-          <el-checkbox label="单纯品牌曝光" name="type"></el-checkbox>
-        </el-checkbox-group>
-      </el-form-item>
-      <el-form-item label="特殊资源">
-        <el-radio-group v-model="form.resource">
-          <el-radio label="线上品牌商赞助"></el-radio>
-          <el-radio label="线下场地免费"></el-radio>
-        </el-radio-group>
-      </el-form-item>
-      <el-form-item label="活动形式">
-        <el-input type="textarea" v-model="form.desc"></el-input>
+
+
+      <el-form-item label="内容">
+        <el-input type="textarea" v-model="form.desc" style="height: auto"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="onSubmit">立即创建</el-button>
+        <el-button type="primary" @click="onSubmit">提交</el-button>
         <el-button>取消</el-button>
+        <el-button type="success" @click="goHome">返回首页</el-button>
       </el-form-item>
     </el-form>
 
@@ -113,6 +54,7 @@
       </el-table>
     </div>
 
+    </div>
 
   </div>
 </template>
@@ -129,8 +71,7 @@ export default {
       form: {
         name: '',
         region: '',
-        date1: '',
-        date2: '',
+        miaoshu: '',
         delivery: false,
         type: [],
         resource: '',
@@ -154,6 +95,31 @@ export default {
   methods: {
     onSubmit() {
       console.log('submit!');
+    },
+    goHome() {
+      this.$router.push('/')
+    },
+    handlePreview(file) {
+      // 图片预览
+      console.log('预览图片', file);
+    },
+    handleRemove(file, fileList) {
+      // 图片移除
+      console.log('移除图片', file, fileList);
+    },
+    beforeUpload(file) {
+      // 上传前的处理
+      const isJPG = file.type === 'image/jpeg';
+      const isPNG = file.type === 'image/png';
+      const isLt500KB = file.size / 1024 < 500;
+
+      if (!isJPG && !isPNG) {
+        this.$message.error('只能上传 JPG/PNG 格式的图片');
+      }
+      if (!isLt500KB) {
+        this.$message.error('图片大小不能超过 500KB');
+      }
+      return isJPG || isPNG && isLt500KB;
     }
   }
 }
@@ -194,5 +160,19 @@ export default {
 .row-bg {
   padding: 10px 0;
   background-color: #f9fafc;
+}
+
+.upload-demo {
+  border: 1px dashed #409EFF;
+  border-radius: 6px;
+  cursor: pointer;
+  text-align: center;
+  width: 200px;
+  height: 200px;
+  line-height: 200px;
+}
+.upload-demo .el-upload__tip {
+  font-size: 12px;
+  color: #909399;
 }
 </style>
